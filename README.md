@@ -2,7 +2,7 @@
 Repositório de atividades da disciplina de microcontroladores e microprocessadores da UnB-Gama.
 ## Aluno
 | Nome                         | Matrícula     | E-mail                              | GitHub           |
-| :----------------------------|:--------------|:------------------------------------|:-----------------|
+| -----------------------------|---------------|-------------------------------------|------------------|
 | Wilton Rodrigues             | 13/0049212    | wiltonsr94@gmail.com                | @wiltonsr        |
 ## Ementa
 - Visão geral de microcontroladores MSP430.
