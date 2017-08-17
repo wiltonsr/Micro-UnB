@@ -37,8 +37,26 @@ a = a^0b11110000;
 #include <msp430g2553.h>
 #define LEDS (BIT0 + BIT6)
 
+void main()
+{
+  WDTCTL = WDTPW + WDTHOLD;
+  P1DIR = LEDS;
+  P1OUT = BIT6;
+  while(1){
+    P1OUT ^= LEDS;
+    __delay_cycles(220000);
+  }
+}
+```
+
+### 3. **Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.**
+```c
+#include <msp430g2553.h>
+#define LEDS (BIT0 + BIT6)
+
 void main(void)
 {
+  int i;
   WDTCTL = WDTPW + WDTHOLD;
 
   P1DIR = LEDS;
@@ -46,29 +64,75 @@ void main(void)
   P1REN = BIT3;
   P1OUT = BIT3;
 
-  while(1)
-  {
-    if((P1IN & BIT3)!=BIT3)
-    {
-      __delay_cycles(220000);
-      P1OUT ^= LEDS;
+  while(1){
+    if((P1IN & BIT3)!=BIT3){
+      for (i = 0; i < 2; ++i) {
+        P1OUT ^= LEDS;
+        __delay_cycles(500000);
+        P1OUT = BIT3;
+        __delay_cycles(500000);
+      }
     }
   }
 }
 ```
 
-### 3. **Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.**
-```
-```
-
 ### 4. **Considerando a placa Launchpad do MSP430, faça uma função em C que pisca os dois LEDs uma vez.**
-```
+```c
+void blink_led(){
+  P1OUT ^= LEDS;
+}
 ```
 
 ### 5. **Reescreva o código da questão 2 usando a função da questão 4.**
-```
+```c
+#include <msp430g2553.h>
+#define LEDS (BIT0 + BIT6)
+
+void blink_led(){
+  P1OUT ^= LEDS;
+}
+
+void main()
+{
+  WDTCTL = WDTPW + WDTHOLD;
+  P1DIR = LEDS;
+  P1OUT = BIT6;
+  while(1){
+    blink_led();
+    __delay_cycles(220000);
+  }
+}
 ```
 
 ### 6. **Reescreva o código da questão 3 usando a função da questão 4.**
 ```
+#include <msp430g2553.h>
+#define LEDS (BIT0 + BIT6)
+
+void blink_led(){
+  P1OUT ^= LEDS;
+}
+
+void main(void)
+{
+  int i;
+  WDTCTL = WDTPW + WDTHOLD;
+
+  P1DIR = LEDS;
+
+  P1REN = BIT3;
+  P1OUT = BIT3;
+
+  while(1){
+    if((P1IN & BIT3)!=BIT3){
+      for (i = 0; i < 2; ++i) {
+        blink_led();
+        __delay_cycles(500000);
+        P1OUT = BIT3;
+        __delay_cycles(500000);
+      }
+    }
+  }
+}
 ```
