@@ -8,7 +8,7 @@
 * gdb-msp430: GNU Debugger for the MSP430
 * mspdebug: Write and debug tool for MSP430.
 
-### After install all packages, you can download a Hello World code with the below command. This Hello World will be a double LED flashing.
+### After install all packages, you can download a Hello World code with the below command. This Hello World will power on a double LED when you press P1.3 button.
 ```
 $ wget -O helloWorld.c https://git.io/v7ABV
 ```
