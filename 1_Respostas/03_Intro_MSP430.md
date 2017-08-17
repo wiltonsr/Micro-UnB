@@ -106,7 +106,7 @@ void main()
 ```
 
 ### 6. **Reescreva o código da questão 3 usando a função da questão 4.**
-```
+```c
 #include <msp430g2553.h>
 #define LEDS (BIT0 + BIT6)
 
