@@ -3,33 +3,33 @@
 ### 1. **Dada uma variável `a` do tipo `char` (um byte), escreva os trechos de código em C para:**
 - ### **(a) Somente setar o bit menos significativo de `a`.**
 ```c
-char a = 0x01;
+char a |= (0b00000001);
 ```
 
 - ### **(b) Somente setar dois bits de `a`: o menos significativo e o segundo menos significativo.**
 ```c
-char a = 0x03;
+char a |= (0b00000011);
 ```
 
 - ### **(c) Somente zerar o terceiro bit menos significativo de `a`.**
 ```c
-char a = 0xFB;
+char a &= ~(0b00000100);
 ```
 
 - ### **(d) Somente zerar o terceiro e o quarto bits menos significativo de `a`.**
 ```c
-char a = 0xF3;
+char a &= ~(0b00001100);
 ```
 
 - ### **(e) Somente inverter o bit mais significativo de `a`.**
 ```c
-char a = a|0b10000000;
+char a ^= (0b10000000);
 ```
 
 - ### **(f) Inverter o nibble mais significativo de `a`, e setar o nibble menos significativo de `a`.**
 ```c
-char a = a|0b00000000;
-a = a^0b11110000;
+char a ^= (0b11110000);
+a |= 0b00001111;
 ```
 
 ### 2. **Considerando a placa Launchpad do MSP430, escreva o código em C para piscar os dois LEDs ininterruptamente.**
