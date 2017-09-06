@@ -42,11 +42,16 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \section{Introdução}
 
+\subsection{Revisão Bibliográfica}
+Notícias sobre acidentes envolvendo bicicletas são comuns no Brasil. Recentemente, em São Paulo, um ciclista morreu logo após ser atropelado e arrastado \cite{b1}. Dados de 2014, mostram que 1.357 ciclistas morreram vítimas de acidentes de trânsito no Brasil, além disso, em 2016, ocorreram 11.741 internações de ciclistas vítimas de acidentes \cite{b2}. De acordo com Departamente Nacional de Infraestrutura de Transportes (DNIT) \cite{b3} só no ano de 2011 foram 1.698 casos de acidentes envolvendo ciclistas. Sendo que 246, equivalente a 14.5\%, acabaram na morte.
+
+O site hg.org apresenta uma lista de dicas para evitar acidentes ao utilizar bicicleta. O site sugere aos ciclistas que eles se façam visíveis aos demais usuários das vias, e que utilizem sinais de mão para mostrar intenção de parar ou de mudar de faixa \cite{b4}. 
+
+Existe uma série de sinais que podem ser utilizados pelos ciclistas para indicar suas intenções. O site mapmyrun \cite{b5}, apresenta um lista com 10 sinais que podem ser utilizados a fim de evitar acidentes. Pode-se notar que, de fato, os sinais auxiliam a diminuir os acidentes de trânsito envolvendo ciclistas. Porém, alguns desses sinais não são tão intuitivos e podem não fazer sentido para os motoristas. Além disso, a grande quantidade de sinais pode gerar confusão até mesmo aos ciclistas. 
+
+
 \subsection{Justificativa}
-Este projeto tem como objetivo a criação de um sistema de sinalização com o objetivode aumentar a segurança dos ciclistas. De acordo com Departamente Nacional de
-Infraestrutura de Transportes (DNIT) \cite{b1} só no ano de 2011 foram 1.698 casos
-de acidentes envolvendo ciclistas. Sendo que 246, equivalente a 14.5\%, acabaram 
-na morte.
+Pode-se notar que a visibilidade e sinalização por parte dos ciclistas é crucial para sua segurança no trânsito. Diante disso, este projeto tem como objetivo a criação de um sistema de sinalização eletrônico visando aumentar a segurança dos ciclistas. Espera-se que os usuários do sistema de sinalização eletrônico sofram menos acidentes causados por falta de visibilidade.
 
 \subsection{Objetivos}
 O objetivo do projeto é de desenvolver um sistema de sinalização, utilizando o
@@ -54,16 +59,28 @@ MSP430, a fim de aumentar a visibilidade dos ciclistas durante seu trajeto para
 aumentar a segurança e confiança dos utilizadores deste meio de transporte.
 
 \subsection{Requisitos}
+O sistema deve atender aos requisitos:
+\begin{itemize}
+\item Mostrar sinal luminoso intermitente que fica ativo sempre que não houver outro sinal
+\item Mostrar seta para a direita ou para a esquerda após clique do botão correspondente
+\item Mostrar informação sobre intenção de parada
+\item Mostrar feixe de luz que delimita o espaço da bicicleta
+\end
 
 \subsection{Benefícios}
 O sistema proporciona um equipamento de sinalização que ajuda os demais condutores
 a ter uma melhor visão dos ciclistas. Baseado nisto o principal benefício do sistema
 é a diminuição de ocorrências de acidentes envolvendo ciclistas.
 
-\subsection{Revisão Bibliográfica}
 
 \begin{thebibliography}{00}
-  \bibitem{b1} DNIT, ``NÚMERO DE VITIMADOS ENVOLVIDOS POR TIPO DE USUÁRIO'', 2011.
+  \bibitem{b1} G1, ``Ciclista morre após ser atropelado e arrastado em SP''. Disponível em: http://g1.globo.com/sao-paulo/noticia/ciclista-morre-apos-ser-atropelado-e-arrastado-em-sp.ghtml.
+  \bibitem{b2} G1, ``Brasil tem, em média, 32 ciclistas internados por dia devido a acidentes''. Disponível em: http://g1.globo.com/bom-dia-brasil/noticia/2017/03/brasil-tem-em-media-32-ciclistas-internados-por-dia-devido-acidentes.html.
+  \bibitem{b3} DNIT, ``NÚMERO DE VITIMADOS ENVOLVIDOS POR TIPO DE USUÁRIO'', 2011.
+  \bibitem{b4} Mesriani Law Group, ``Safety Tips to Avoid Bicycle Accidents''. Disponível em: https://www.hg.org/article.asp?id=7752.
+  \bibitem{b5} Marc Lindsay, ``10 Cycling Hand Signals You Need to Know''. Disponível em: http://blog.mapmyrun.com/10-cycling-hand-signals-need-know/.
+
+
 \end{thebibliography}
 
 \end{document}
