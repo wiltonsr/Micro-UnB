@@ -1,14 +1,17 @@
-#define MAX7219_DIN P1_5
-#define MAX7219_CS  P2_0
-#define MAX7219_CLK P2_1
-
-const int wait = 100;
+/* #define MAX7219_DIN P1_5 */
+#define MAX7219_DIN BIT3
+/* #define MAX7219_CS  P2_0 */
+#define MAX7219_CS  BIT4
+/* #define MAX7219_CLK P2_1 */
+#define MAX7219_CLK BIT5
 
 void seta1(){
   write8x8(0x8,0xc,0xe,0xff,0xff,0xe,0xc,0x8);
-  delay(1000);
+  /* delay(1000); */
+  __delay_cycles(1000);
   write8x8(0xf7,0xf3,0xf1,0x0,0x0,0xf1,0xf3,0xf7);
-  delay(1000);
+  /* delay(1000); */
+  __delay_cycles(1000);
 }
 
 void seta2(){
@@ -33,18 +36,22 @@ void seta2(){
 
 void initialise()
 {
-  digitalWrite(MAX7219_CS, HIGH);
-  pinMode(MAX7219_DIN, OUTPUT);
-  pinMode(MAX7219_CS, OUTPUT);
-  pinMode(MAX7219_CLK, OUTPUT);
+  /* pinMode(MAX7219_DIN, OUTPUT); */
+  /* pinMode(MAX7219_CS, OUTPUT); */
+  /* pinMode(MAX7219_CLK, OUTPUT); */
+  P1DIR |= (MAX7219_DIN | MAX7219_CS | MAX7219_CLK);
+  /* digitalWrite(MAX7219_CS, HIGH); */
+  P1OUT |= (MAXT219_CS);
 }
 
 void output(byte address, byte data)
 {
-  digitalWrite(MAX7219_CS, LOW);
+  /* digitalWrite(MAX7219_CS, LOW); */
+  P1OUT &= ~(MAXT219_CS);
   shiftOut(MAX7219_DIN, MAX7219_CLK, MSBFIRST, address);
   shiftOut(MAX7219_DIN, MAX7219_CLK, MSBFIRST, data);
-  digitalWrite(MAX7219_CS, HIGH);
+  /* digitalWrite(MAX7219_CS, HIGH); */
+  P1OUT |= (MAXT219_CS);
 }
 
 void setTestMode(boolean on)
@@ -72,35 +79,43 @@ void putByte(byte data) {
   byte mask;
   while(i > 0) {
     mask = 0x01 << (i - 1);           // get bitmask
-    digitalWrite(MAX7219_CLK, LOW);   // tick
+    /* digitalWrite(MAX7219_CLK, LOW);   // tick */
+    P1OUT &= ~(MAXT219_CLK);
     if (data & mask){                 // choose bit
-      digitalWrite(MAX7219_DIN, HIGH);// send 1
+      /* digitalWrite(MAX7219_DIN, HIGH);// send 1 */
+      P1OUT |= (MAXT219_DIN);
     }else{
-      digitalWrite(MAX7219_DIN, LOW); // send 0
+      /* digitalWrite(MAX7219_DIN, LOW); // send 0 */
+      P1OUT &= ~(MAXT219_DIN);
     }
-    digitalWrite(MAX7219_CLK, HIGH);  // tock
+    /* digitalWrite(MAX7219_CLK, HIGH);  // tock */
+    P1OUT |= (MAXT219_CLK);
     --i;                              // move to lesser bit
   }
 }
 
 void maxSingle(byte reg, byte col) {
-  digitalWrite(MAX7219_CS, LOW);       // CS has to transition from LOW to HIGH    
+  /* digitalWrite(MAX7219_CS, LOW);       // CS has to transition from LOW to HIGH */
+  P1OUT &= ~(MAXT219_CS);
   putByte(reg);                        // specify register
-  putByte(col);                        // put data  
-  digitalWrite(MAX7219_CS, LOW);       // Load by switching CS HIGH
-  digitalWrite(MAX7219_CS, HIGH);
+  putByte(col);                        // put data
+  /* digitalWrite(MAX7219_CS, LOW);       // Load by switching CS HIGH */
+  P1OUT &= ~(MAXT219_CS);
+  /* digitalWrite(MAX7219_CS, HIGH); */
+  P1OUT |= (MAXT219_CS);
 }
 
 void write8x8(byte a, byte b, byte c, byte d, byte e, byte f, byte g, byte h){
-   maxSingle(1,a);
-   maxSingle(2,b);
-   maxSingle(3,c);
-   maxSingle(4,d);
-   maxSingle(5,e);
-   maxSingle(6,f);
-   maxSingle(7,g);
-   maxSingle(8,h);
-  delay(wait);
+  maxSingle(1,a);
+  maxSingle(2,b);
+  maxSingle(3,c);
+  maxSingle(4,d);
+  maxSingle(5,e);
+  maxSingle(6,f);
+  maxSingle(7,g);
+  maxSingle(8,h);
+  /* delay(wait); */
+  __delay_cycles(1000);
 }
 
 void setup() {
@@ -112,6 +127,12 @@ void setup() {
   output(0x09, 0);  // using an led matrix (not digits)
 }
 
-void loop() {
-  seta2();
+/* void loop() { */
+/*   seta2(); */
+/* } */
+int main(){
+  setup();
+  while(1){
+    seta2();
+  }
 }
