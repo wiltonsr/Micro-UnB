@@ -13,7 +13,12 @@
 $ wget -O helloWorld.c https://git.io/v7ABV
 ```
 
-### Now, to compile, just pass the CPU model to the mps430-gcc. It changes according to the chip you are using, in our case the chip model is 553:
+### You can use the Makefile that is present in this repository and just run:
+```
+$ make run helloWorld.c
+```
+
+### Or to compile manually, pass the CPU model to the mps430-gcc. It changes according to the chip you are using, in our case the chip model is 553:
 ```
 $ msp430-gcc -Os -mmcu=msp430g2553 helloWorld.c -o helloWorld.elf
 ```
