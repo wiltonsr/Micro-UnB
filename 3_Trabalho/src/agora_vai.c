@@ -5,7 +5,7 @@
 #define MAX7219_CS  BIT5
 
 //Não alterar
-#define MAX7219_CLK P2_1
+#define MAX7219_CLK BIT1
 
 const int wait = 100;
 
@@ -40,7 +40,8 @@ void initialise()
   //pinMode(MAX7219_CS, OUTPUT);
   P1DIR |= MAX7219_CS;
   
-  pinMode(MAX7219_CLK, OUTPUT);
+  //pinMode(MAX7219_CLK, OUTPUT);
+  P2DIR |= MAX7219_CLK;
 }
 
 void output(byte address, byte data)
@@ -78,7 +79,8 @@ void putByte(byte data) {
   byte mask;
   while(i > 0) {
     mask = 0x01 << (i - 1);           // get bitmask
-    digitalWrite(MAX7219_CLK, LOW);   // tick
+    //digitalWrite(MAX7219_CLK, LOW);   // tick
+    P2OUT &= ~(MAX7219_CLK);
     if (data & mask){                 // choose bit
       //digitalWrite(MAX7219_DIN, HIGH);// send 1
       P1OUT |= MAX7219_DIN;
@@ -86,7 +88,8 @@ void putByte(byte data) {
       //digitalWrite(MAX7219_DIN, LOW); // send 0
       P1OUT &= ~(MAX7219_DIN);
     }
-    digitalWrite(MAX7219_CLK, HIGH);  // tock
+    //digitalWrite(MAX7219_CLK, HIGH);  // tock
+    P2OUT |= MAX7219_CLK;
     --i;                              // move to lesser bit
   }
 }
@@ -96,9 +99,9 @@ void maxSingle(byte reg, byte col) {
   P1OUT &= ~(MAX7219_CS);
   putByte(reg);                        // specify register
   putByte(col);                        // put data  
-  digitalWrite(MAX7219_CS, LOW);       // Load by switching CS HIGH
+  //digitalWrite(MAX7219_CS, LOW);       // Load by switching CS HIGH
   P1OUT &= ~(MAX7219_CS);
-  digitalWrite(MAX7219_CS, HIGH);
+  //digitalWrite(MAX7219_CS, HIGH);
   P1OUT |= (MAX7219_CS);
 }
 
