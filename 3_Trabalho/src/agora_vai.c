@@ -9,6 +9,24 @@
 
 const int wait = 100;
 
+void _shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val)
+{
+     uint8_t i;
+
+     for (i = 0; i < 8; i++)  {
+      if(!!(val & (1 << (7 - i))) == 0){
+           //digitalWrite(dataPin, !!(val & (1 << (7 - i))));
+           P1OUT |= dataPin;
+      }else{
+          P1OUT &= ~(dataPin);  
+      }
+           //digitalWrite(clockPin, HIGH);
+           P2OUT |= clockPin;
+           //digitalWrite(clockPin, LOW);            
+           P2OUT &= clockPin;
+     }
+}
+
 void seta(){
   write8x8(0x8,0xc,0xe,0xff,0xff,0xe,0xc,0x8);
   write8x8(0x4,0x6,0x7,0x7f,0x7f,0x7,0x6,0x4);
@@ -48,8 +66,8 @@ void output(byte address, byte data)
 {
   //digitalWrite(MAX7219_CS, LOW);
   P1OUT &= ~(MAX7219_CS);
-  shiftOut(MAX7219_DIN, MAX7219_CLK, MSBFIRST, address);
-  shiftOut(MAX7219_DIN, MAX7219_CLK, MSBFIRST, data);
+  _shiftOut(MAX7219_DIN, MAX7219_CLK, address);
+  _shiftOut(MAX7219_DIN, MAX7219_CLK, data);
   //digitalWrite(MAX7219_CS, HIGH);
   P1OUT |= (MAX7219_CS);
 }
@@ -114,7 +132,7 @@ void write8x8(byte a, byte b, byte c, byte d, byte e, byte f, byte g, byte h){
    maxSingle(6,f);
    maxSingle(7,g);
    maxSingle(8,h);
-  delay(wait);
+   __delay_cycles(1000000);
 }
 
 void setup() {
