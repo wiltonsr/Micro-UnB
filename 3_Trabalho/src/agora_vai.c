@@ -1,4 +1,6 @@
 #include <msp430g2553.h>
+#include <stdint.h>
+#undef main
 
 #define MAX7219_DIN BIT4
 
@@ -62,7 +64,7 @@ void initialise()
   P2DIR |= MAX7219_CLK;
 }
 
-void output(byte address, byte data)
+void output(char address, char data)
 {
   //digitalWrite(MAX7219_CS, LOW);
   P1OUT &= ~(MAX7219_CS);
@@ -72,29 +74,29 @@ void output(byte address, byte data)
   P1OUT |= (MAX7219_CS);
 }
 
-void setTestMode(boolean on)
+void setTestMode(int on)
 {
   output(0x0f, on ? 0x01 : 0x00);
 }
 
-void setShutdown(boolean off)
+void setShutdown(int off)
 {
   output(0x0c, off ? 0x00 : 0x01); //shutdown register - normal operation
 }
 
-void showDigits(byte numDigits)
+void showDigits(char numDigits)
 {
   output(0x0b, numDigits-1); //scan limit register
 }
 
-void setBrightness(byte brightness)
+void setBrightness(char brightness)
 {
   output(0x0a, brightness); //intensity register - max brightness
 }
 
-void putByte(byte data) {
-  byte i = 8;
-  byte mask;
+void putByte(char data) {
+  char i = 8;
+  char mask;
   while(i > 0) {
     mask = 0x01 << (i - 1);           // get bitmask
     //digitalWrite(MAX7219_CLK, LOW);   // tick
@@ -112,7 +114,7 @@ void putByte(byte data) {
   }
 }
 
-void maxSingle(byte reg, byte col) {
+void maxSingle(char reg, char col) {
   //digitalWrite(MAX7219_CS, LOW);       // CS has to transition from LOW to HIGH    
   P1OUT &= ~(MAX7219_CS);
   putByte(reg);                        // specify register
@@ -123,7 +125,7 @@ void maxSingle(byte reg, byte col) {
   P1OUT |= (MAX7219_CS);
 }
 
-void write8x8(byte a, byte b, byte c, byte d, byte e, byte f, byte g, byte h){
+void write8x8(char a, char b, char c, char d, char e, char f, char g, char h){
    maxSingle(1,a);
    maxSingle(2,b);
    maxSingle(3,c);
@@ -132,20 +134,23 @@ void write8x8(byte a, byte b, byte c, byte d, byte e, byte f, byte g, byte h){
    maxSingle(6,f);
    maxSingle(7,g);
    maxSingle(8,h);
-   __delay_cycles(1000000);
+  delay(wait);
 }
 
-void setup() {
+
+int main(){
+  init();
+  
   initialise();
-  setTestMode(false);
-  setShutdown(false);
+  setTestMode(0);
+  setShutdown(0);
   setBrightness(1); // Brightness range 1..0x0f
   showDigits(8);    // Make sure all digits are visible
   output(0x09, 0);  // using an led matrix (not digits)
+  while(1){
+    seta();
+  }
+  return 0;
 }
 
-void loop() {
-  // Generate bytes with something like the LED Byte Generator Chrome App: https://goo.gl/w4xhzm
-  seta();
-}
 
