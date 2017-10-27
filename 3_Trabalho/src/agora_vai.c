@@ -1,9 +1,12 @@
 #include <msp430g2553.h>
-#define MAX7219_DIN P1_4
+
+#define MAX7219_DIN BIT4
+
 #define MAX7219_CS  BIT5
 
 //Não alterar
 #define MAX7219_CLK P2_1
+
 const int wait = 100;
 
 void seta(){
@@ -30,10 +33,13 @@ void initialise()
 {
   //digitalWrite(MAX7219_CS, HIGH);
   P1OUT |= MAX7219_CS;
-  pinMode(MAX7219_DIN, OUTPUT);
-  //P1DIR |= MAX7219_DIN;
+  
+  //pinMode(MAX7219_DIN, OUTPUT);
+  P1DIR |= MAX7219_DIN;
+  
   //pinMode(MAX7219_CS, OUTPUT);
   P1DIR |= MAX7219_CS;
+  
   pinMode(MAX7219_CLK, OUTPUT);
 }
 
@@ -74,9 +80,11 @@ void putByte(byte data) {
     mask = 0x01 << (i - 1);           // get bitmask
     digitalWrite(MAX7219_CLK, LOW);   // tick
     if (data & mask){                 // choose bit
-      digitalWrite(MAX7219_DIN, HIGH);// send 1
+      //digitalWrite(MAX7219_DIN, HIGH);// send 1
+      P1OUT |= MAX7219_DIN;
     }else{
-      digitalWrite(MAX7219_DIN, LOW); // send 0
+      //digitalWrite(MAX7219_DIN, LOW); // send 0
+      P1OUT &= ~(MAX7219_DIN);
     }
     digitalWrite(MAX7219_CLK, HIGH);  // tock
     --i;                              // move to lesser bit
