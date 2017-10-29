@@ -9,7 +9,10 @@
 //Não alterar
 #define MAX7219_CLK BIT1
 
-const int wait = 100;
+void atraso(volatile unsigned int i)
+{
+  while((i--)>0);
+}
 
 void _shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val)
 {
@@ -51,9 +54,10 @@ void seta(){
 
 void initialise()
 {
+  
   //digitalWrite(MAX7219_CS, HIGH);
   P1OUT |= MAX7219_CS;
-  
+
   //pinMode(MAX7219_DIN, OUTPUT);
   P1DIR |= MAX7219_DIN;
   
@@ -134,12 +138,14 @@ void write8x8(char a, char b, char c, char d, char e, char f, char g, char h){
    maxSingle(6,f);
    maxSingle(7,g);
    maxSingle(8,h);
-  delay(wait);
+   atraso(10000);
 }
 
 
 int main(){
-  init();
+  WDTCTL = WDTPW + WDTHOLD;   // Disable WDT
+  DCOCTL = CALDCO_1MHZ;     // 1 Mhz DCO
+  BCSCTL1 = CALBC1_1MHZ;  
   
   initialise();
   setTestMode(0);
@@ -147,10 +153,13 @@ int main(){
   setBrightness(1); // Brightness range 1..0x0f
   showDigits(8);    // Make sure all digits are visible
   output(0x09, 0);  // using an led matrix (not digits)
+  
+  write8x8(0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0); // Cleaning screen
   while(1){
     seta();
   }
   return 0;
 }
+
 
 
