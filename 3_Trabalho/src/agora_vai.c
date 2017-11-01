@@ -8,6 +8,7 @@
 //Não alterar
 #define MAX7219_CLK BIT1
 
+
 void atraso(volatile unsigned int i)
 {
   while((i--)>0);
@@ -97,35 +98,35 @@ void initialise()
   P2DIR |= MAX7219_CLK;
 }
 
-void output(char address, char data)
-{
-  //digitalWrite(MAX7219_CS, LOW);
-  P1OUT &= ~(MAX7219_CS);
-  _shiftOut(MAX7219_DIN, MAX7219_CLK, address);
-  _shiftOut(MAX7219_DIN, MAX7219_CLK, data);
-  //digitalWrite(MAX7219_CS, HIGH);
-  P1OUT |= (MAX7219_CS);
-}
+// void output(char address, char data)
+// {
+//   //digitalWrite(MAX7219_CS, LOW);
+//   P1OUT &= ~(MAX7219_CS);
+//   _shiftOut(MAX7219_DIN, MAX7219_CLK, address);
+//   _shiftOut(MAX7219_DIN, MAX7219_CLK, data);
+//   //digitalWrite(MAX7219_CS, HIGH);
+//   P1OUT |= (MAX7219_CS);
+// }
 
-void setTestMode(int on)
-{
-  output(0x0f, on ? 0x01 : 0x00);
-}
+// void setTestMode(int on)
+// {
+//   output(0x0f, on ? 0x01 : 0x00);
+// }
 
-void setShutdown(int off)
-{
-  output(0x0c, off ? 0x00 : 0x01); //shutdown register - normal operation
-}
+// void setShutdown(int off)
+// {
+//   output(0x0c, off ? 0x00 : 0x01); //shutdown register - normal operation
+// }
 
-void showDigits(char numDigits)
-{
-  output(0x0b, numDigits-1); //scan limit register
-}
+// void showDigits(char numDigits)
+// {
+//   output(0x0b, numDigits-1); //scan limit register
+// }
 
-void setBrightness(char brightness)
-{
-  output(0x0a, brightness); //intensity register - max brightness
-}
+// void setBrightness(char brightness)
+// {
+//   output(0x0a, brightness); //intensity register - max brightness
+// }
 
 void putByte(char data) {
   char i = 8;
@@ -151,6 +152,9 @@ void maxSingle(char reg, char col) {
   //digitalWrite(MAX7219_CS, LOW);       // CS has to transition from LOW to HIGH    
   P1OUT &= ~(MAX7219_CS);
   putByte(reg);                        // specify register
+  //asm("mov.w reg, R15");
+  //asm("call #putByte");
+  //asm("pop R15");
   putByte(col);                        // put data  
   //digitalWrite(MAX7219_CS, LOW);       // Load by switching CS HIGH
   P1OUT &= ~(MAX7219_CS);
@@ -177,16 +181,18 @@ int main(){
   BCSCTL1 = CALBC1_1MHZ;  
   
   initialise();
-  setTestMode(0);
-  setShutdown(0);
-  setBrightness(1); // Brightness range 1..0x0f
-  showDigits(8);    // Make sure all digits are visible
-  output(0x09, 0);  // using an led matrix (not digits)
+  //setTestMode(0);
+  //setShutdown(0);
+  //setBrightness(1); // Brightness range 1..0x0f
+  //showDigits(8);    // Make sure all digits are visible
+  //output(0x09, 0);  // using an led matrix (not digits)
   
   atraso(100);
   write8x8(0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0); // Cleaning screen
   atraso(100);
   while(1){
+    setaDir();
+    setaEsq();
     parada();
   }
   return 0;
