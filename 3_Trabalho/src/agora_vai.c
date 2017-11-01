@@ -1,6 +1,5 @@
 #include <msp430g2553.h>
 #include <stdint.h>
-#undef main
 
 #define MAX7219_DIN BIT4
 
@@ -30,6 +29,13 @@ void _shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val)
            //digitalWrite(clockPin, LOW);            
            P2OUT &= clockPin;
      }
+}
+
+void parada(){
+  write8x8(0x0,0x42,0x24,0x18,0x18,0x24,0x42,0x0);
+  atraso(2000000);
+  write8x8(0xff,0xbd,0xdb,0xe7,0xe7,0xdb,0xbd,0xff);
+  atraso(2000000);
 }
 
 void setaEsq(){
@@ -75,15 +81,19 @@ void initialise()
 {
   
   //digitalWrite(MAX7219_CS, HIGH);
+  P1OUT &= ~(MAX7219_CS);
   P1OUT |= MAX7219_CS;
 
   //pinMode(MAX7219_DIN, OUTPUT);
+  P1DIR &= ~(MAX7219_DIN);
   P1DIR |= MAX7219_DIN;
   
   //pinMode(MAX7219_CS, OUTPUT);
+  P1DIR &= ~(MAX7219_CS);
   P1DIR |= MAX7219_CS;
   
   //pinMode(MAX7219_CLK, OUTPUT);
+  P2DIR &= ~(MAX7219_CLK);
   P2DIR |= MAX7219_CLK;
 }
 
@@ -173,9 +183,11 @@ int main(){
   showDigits(8);    // Make sure all digits are visible
   output(0x09, 0);  // using an led matrix (not digits)
   
+  atraso(100);
   write8x8(0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0); // Cleaning screen
+  atraso(100);
   while(1){
-    setaEsq();
+    parada();
   }
   return 0;
 }

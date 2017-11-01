@@ -2,7 +2,7 @@ SRC_DIR = src
 ELF_DIR = elf
 INC_DIR = inc
 
-MAIN_FILE 			= main.c
+MAIN_FILE 			= agora_vai.c
 CC              = msp430-gcc
 CC2             = mspdebug
 CPU             = -mmcu=msp430g2553
@@ -19,7 +19,7 @@ FLASH_ARG 			= $(MAIN_FILE:.c=.elf)
 all: folders
 	$(MAKE) $(MAIN_FILE)
 
-$(MAIN_FILE): compiler flash clean
+$(MAIN_FILE): flasherase compiler flash clean
 	@echo All Done Sucessfully.
 
 compiler:
