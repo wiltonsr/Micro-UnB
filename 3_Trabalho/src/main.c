@@ -9,7 +9,7 @@ int main(){
   BCSCTL1 = CALBC1_1MHZ;
 
   initialise();
-  write8x8(0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0); // Cleaning screen
+  clear_screen();
 
   while(1){
     setaDir();

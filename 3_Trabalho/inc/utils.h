@@ -3,4 +3,6 @@
 
 void atraso(volatile unsigned int i);
 
+void clear_screen();
+
 #endif
