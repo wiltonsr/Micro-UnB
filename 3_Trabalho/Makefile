@@ -1,15 +1,17 @@
 SRC_DIR = src
+OBJ_DIR = obj
 ELF_DIR = elf
 INC_DIR = inc
 
-MAIN_FILE 			= agora_vai.c
+MAIN_FILE 			= main.c
 CC              = msp430-gcc
 CC2             = mspdebug
 CPU             = -mmcu=msp430g2553
 DRIVER          = rf2500
-CFLAGS 					= $(CPU) -Wall -g -lm -O2
+CFLAGS 					= $(CPU) -Wall -g -lm -O2 -Iinc/
 
 SRC = ${wildcard $(SRC_DIR)/*.c}
+OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.c=.o}}}
 
 COMPILER_ARG		= $(MAIN_FILE)
 FLASH_ARG 			= $(MAIN_FILE:.c=.elf)
@@ -19,12 +21,18 @@ FLASH_ARG 			= $(MAIN_FILE:.c=.elf)
 all: folders
 	$(MAKE) $(MAIN_FILE)
 
-$(MAIN_FILE): flasherase compiler flash clean
+$(MAIN_FILE): $(OBJ) flasherase compiler flash clean
 	@echo All Done Sucessfully.
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@echo Creating object $@
+	@echo Command:
+	$(CC) -c $(CFLAGS) $< -o $@
+	@echo ""
 
 compiler:
 	@echo "Compiling " $(SRC_DIR)/$(COMPILER_ARG) " file ..."
-	$(CC) $(CFLAGS) $(SRC_DIR)/$(COMPILER_ARG) -o $(ELF_DIR)/$(FLASH_ARG)
+	$(CC) $(CFLAGS) -o $(ELF_DIR)/$(FLASH_ARG) $(OBJ)
 	@echo ""
 
 flash:
@@ -39,11 +47,11 @@ flasherase:
 
 clean:
 	@echo Cleaning recursively...
-	@rm -rf $(ELF_DIR) *~
+	@rm -rf $(ELF_DIR) $(OBJ_DIR) *~
 	@echo Cleaning Done Sucessfully.
 
 folders:
 	@echo Creating project structure...
-	@mkdir -p $(ELF_DIR) $(SRC_DIR) $(INC_DIR)
+	@mkdir -p $(ELF_DIR) $(SRC_DIR) $(OBJ_DIR) $(INC_DIR)
 	@echo Structure Done Sucessfully.
 

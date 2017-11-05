@@ -1,1 +1,0 @@
-#define AAA 5
