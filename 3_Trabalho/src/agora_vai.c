@@ -1,12 +1,12 @@
 #include <msp430g2553.h>
 #include <stdint.h>
 
-#define MAX7219_DIN BIT4
+#define MAX7219_DIN BIT3
 
-#define MAX7219_CS  BIT5
+#define MAX7219_CS  BIT4
 
 //Não alterar
-#define MAX7219_CLK BIT1
+#define MAX7219_CLK BIT5
 
 
 void atraso(volatile unsigned int i)
@@ -16,17 +16,17 @@ void atraso(volatile unsigned int i)
 
 void _shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val)
 {
-     uint8_t i;
+  uint8_t i;
 
-     for (i = 0; i < 8; i++)  {
-      if(!!(val & (1 << (7 - i))) == 0){
-           P1OUT |= dataPin;
-      }else{
-          P1OUT &= ~(dataPin);  
-      }
-           P2OUT |= clockPin;
-           P2OUT &= clockPin;
-     }
+  for (i = 0; i < 8; i++)  {
+    if(!!(val & (1 << (7 - i))) == 0){
+      P1OUT |= dataPin;
+    }else{
+      P1OUT &= ~(dataPin);
+    }
+    P1OUT |= clockPin;
+    P1OUT &= clockPin;
+  }
 }
 
 void parada(){
@@ -81,12 +81,12 @@ void initialise(){
 
   P1DIR &= ~(MAX7219_DIN);
   P1DIR |= MAX7219_DIN;
-  
+
   P1DIR &= ~(MAX7219_CS);
   P1DIR |= MAX7219_CS;
-  
-  P2DIR &= ~(MAX7219_CLK);
-  P2DIR |= MAX7219_CLK;
+
+  P1DIR &= ~(MAX7219_CLK);
+  P1DIR |= MAX7219_CLK;
 }
 
 
@@ -95,51 +95,52 @@ void putByte(char data) {
   char mask;
   while(i > 0) {
     mask = 0x01 << (i - 1);           // get bitmask
-    P2OUT &= ~(MAX7219_CLK);
+    P1OUT &= ~(MAX7219_CLK);
     if (data & mask){                 // choose bit
       P1OUT |= MAX7219_DIN;
     }else{
       P1OUT &= ~(MAX7219_DIN);
     }
-    P2OUT |= MAX7219_CLK;
+    P1OUT |= MAX7219_CLK;
     --i;                              // move to lesser bit
   }
 }
 
-void maxSingle(char reg, char col) { 
+void maxSingle(char reg, char col) {
   P1OUT &= ~(MAX7219_CS);
   putByte(reg);                        // specify register
   //asm("mov.w reg, R15");
   //asm("call #putByte");
   //asm("pop R15");
-  putByte(col);                        // put data  
+  putByte(col);                        // put data
   P1OUT &= ~(MAX7219_CS);
   P1OUT |= (MAX7219_CS);
 }
 
 void write8x8(char a, char b, char c, char d, char e, char f, char g, char h){
-   maxSingle(1,a);
-   maxSingle(2,b);
-   maxSingle(3,c);
-   maxSingle(4,d);
-   maxSingle(5,e);
-   maxSingle(6,f);
-   maxSingle(7,g);
-   maxSingle(8,h);
-   atraso(10000);
+  maxSingle(1,a);
+  maxSingle(2,b);
+  maxSingle(3,c);
+  maxSingle(4,d);
+  maxSingle(5,e);
+  maxSingle(6,f);
+  maxSingle(7,g);
+  maxSingle(8,h);
+  atraso(10000);
 }
 
 
 int main(){
   WDTCTL = WDTPW + WDTHOLD;   // Disable WDT
   DCOCTL = CALDCO_1MHZ;     // 1 Mhz DCO
-  BCSCTL1 = CALBC1_1MHZ;  
-  
+  BCSCTL1 = CALBC1_1MHZ;
+
   initialise();
   write8x8(0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0); // Cleaning screen
 
   while(1){
     setaDir();
+    parada();
     setaEsq();
     parada();
   }
