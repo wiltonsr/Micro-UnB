@@ -27,7 +27,7 @@ int main(){
     //parada();
     //setaEsq();
     //parada();
-	    parada();
+	    setaFrente();
 	    P1OUT |= 0xFF;
 }
 	
@@ -36,7 +36,8 @@ int main(){
 
 interrupt(PORT1_VECTOR) Interrupcao_P1(void)
 {
-	while(!(P1IN&BTN)==0);
-	setaEsq();
+	while(!(P1IN&BTN)==0){
+	  parada();
+  }
 	P1IFG &= ~BTN;
 }
