@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "drawing.h"
 #include <msp430g2553.h>
+#include <legacymsp430.h> // Para rodar interrupcoes
 #define BTN BIT6
 
 int main(){
@@ -13,6 +14,10 @@ int main(){
   P1DIR &= ~BTN;
   P1REN &= ~BTN;
   P1OUT |= BTN;
+  P1IES |= BTN;
+  P1IE |= BTN;
+  _BIS_SR(GIE);
+
   clear_screen();
 
   while(1){
@@ -22,16 +27,16 @@ int main(){
     //parada();
     //setaEsq();
     //parada();
-    if(!(P1IN&BTN)==0){ //botão pressionado
-	    setaEsq();
-	    P1OUT |= BTN;
-	}
-    else{
 	    parada();
 	    P1OUT |= 0xFF;
 }
 	
-	    //P1OUT &= ~BIT0;
-  }
   return 0;
+}
+
+interrupt(PORT1_VECTOR) Interrupcao_P1(void)
+{
+	while(!(P1IN&BTN)==0);
+	setaEsq();
+	P1IFG &= ~BTN;
 }
