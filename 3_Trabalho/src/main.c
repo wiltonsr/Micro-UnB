@@ -21,23 +21,16 @@ int main(){
   clear_screen();
 
   while(1){
-    //setaDir();
-    //parada();
-    //parada();
-    //parada();
-    //setaEsq();
-    //parada();
-	    setaFrente();
-	    P1OUT |= 0xFF;
-}
-	
+    ahead_arrow();
+    P1OUT |= 0xFF;
+  }
+
   return 0;
 }
 
-interrupt(PORT1_VECTOR) Interrupcao_P1(void)
-{
-	while(!(P1IN&BTN)==0){
-	  parada();
+interrupt(PORT1_VECTOR) Interrupcao_P1(void){
+  while((P1IN&BTN)==0){
+    stop();
   }
-	P1IFG &= ~BTN;
+  P1IFG &= ~BTN;
 }

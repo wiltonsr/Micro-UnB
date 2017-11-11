@@ -6,7 +6,7 @@
 #define MAX7219_CS  BIT4
 #define MAX7219_CLK BIT5
 
-void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val){
+void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val){
   uint8_t i;
 
   for (i = 0; i < 8; i++)  {
@@ -35,7 +35,7 @@ void initialise(){
 }
 
 
-void putByte(char data) {
+void put_byte(char data) {
   char i = 8;
   char mask;
   while(i > 0) {
@@ -51,25 +51,25 @@ void putByte(char data) {
   }
 }
 
-void maxSingle(char reg, char col) {
+void max_single(char reg, char col) {
   P1OUT &= ~(MAX7219_CS);
-  putByte(reg);                        // specify register
+  put_byte(reg);                        // specify register
   //asm("mov.w reg, R15");
   //asm("call #putByte");
   //asm("pop R15");
-  putByte(col);                        // put data
+  put_byte(col);                        // put data
   P1OUT &= ~(MAX7219_CS);
   P1OUT |= (MAX7219_CS);
 }
 
 void write8x8(char a, char b, char c, char d, char e, char f, char g, char h){
-  maxSingle(1,a);
-  maxSingle(2,b);
-  maxSingle(3,c);
-  maxSingle(4,d);
-  maxSingle(5,e);
-  maxSingle(6,f);
-  maxSingle(7,g);
-  maxSingle(8,h);
-  atraso(10000);
+  max_single(1,a);
+  max_single(2,b);
+  max_single(3,c);
+  max_single(4,d);
+  max_single(5,e);
+  max_single(6,f);
+  max_single(7,g);
+  max_single(8,h);
+  delay(10000);
 }

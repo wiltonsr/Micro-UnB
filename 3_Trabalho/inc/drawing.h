@@ -1,10 +1,12 @@
 #ifndef DRAWING_H
 #define DRAWING_H
 
-void parada();
+void stop();
 
-void setaEsq();
+void left_arrow();
 
-void setaDir();
+void right_arrow();
+
+void ahead_arrow();
 
 #endif

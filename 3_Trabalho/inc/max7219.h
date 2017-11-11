@@ -7,13 +7,13 @@
 
 #include <stdint.h>
 
-void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t val);
+void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val);
 
 void initialise();
 
-void putByte(char data);
+void put_byte(char data);
 
-void maxSingle(char reg, char col);
+void max_single(char reg, char col);
 
 void write8x8(char a, char b, char c, char d, char e, char f, char g, char h);
 

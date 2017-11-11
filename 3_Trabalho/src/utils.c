@@ -1,6 +1,7 @@
 #include "utils.h"
+#include "max7219.h"
 
-void atraso(volatile unsigned int i){
+void delay(volatile unsigned int i){
   while((i--)>0);
 }
 
