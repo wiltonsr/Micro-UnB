@@ -3,9 +3,6 @@
 #include "drawing.h"
 #include <msp430g2553.h>
 #include <legacymsp430.h> // Para rodar interrupcoes
-#define RIGHT_BTN BIT0
-#define LEFT_BTN BIT6
-#define STOP_BTN BIT7
 
 int main(){
   WDTCTL = WDTPW + WDTHOLD;   // Desabilita WDT
@@ -14,13 +11,7 @@ int main(){
 
   initialise();
 
-  P1DIR &= ~(RIGHT_BTN + LEFT_BTN + STOP_BTN); //Seta como entrada 0 = entrada
-  P1OUT &= ~(RIGHT_BTN + LEFT_BTN + STOP_BTN); //Desliga ambos os leds
-  P1IE |= (RIGHT_BTN + LEFT_BTN + STOP_BTN);
-  P1IFG &= ~(RIGHT_BTN + LEFT_BTN + STOP_BTN);
-  P1REN = (RIGHT_BTN + LEFT_BTN + STOP_BTN);
-  P1IES |= (RIGHT_BTN + LEFT_BTN + STOP_BTN);
-
+  configure_buttons();
 
   __enable_interrupt(); // enable all interrupts
 
@@ -36,13 +27,13 @@ int main(){
 #pragma vector=PORT1_VECTOR
 __interrupt void Port_1(void){
   if(P1IFG & RIGHT_BTN){
-    while(!(P1IN & RIGHT_BTN)==0){
+    while((P1IN & RIGHT_BTN)==1){
       right_arrow();
     }
     P1IFG &= ~RIGHT_BTN;
   }
   if(P1IFG & LEFT_BTN){
-    while(!(P1IN & LEFT_BTN)==0){
+    while((P1IN & LEFT_BTN)==1){
       left_arrow();
     }
     P1IFG &= ~LEFT_BTN;
