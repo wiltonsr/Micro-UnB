@@ -27,13 +27,13 @@ int main(){
 #pragma vector=PORT1_VECTOR
 __interrupt void Port_1(void){
   if(P1IFG & RIGHT_BTN){
-    while((P1IN & RIGHT_BTN)==1){
+    while(!(P1IN & RIGHT_BTN)==0){
       right_arrow();
     }
     P1IFG &= ~RIGHT_BTN;
   }
   if(P1IFG & LEFT_BTN){
-    while((P1IN & LEFT_BTN)==1){
+    while(!(P1IN & LEFT_BTN)==0){
       left_arrow();
     }
     P1IFG &= ~LEFT_BTN;
