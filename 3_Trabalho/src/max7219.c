@@ -34,25 +34,26 @@ static void MAX7219_SendByte (unsigned char dataout)
 }
 
 void initialise(){
-  P1OUT &= ~(MAX7219_CS);
   P1OUT |= MAX7219_CS;
 
-  P1DIR &= ~(MAX7219_DIN);
   P1DIR |= MAX7219_DIN;
 
-  P1DIR &= ~(MAX7219_CS);
   P1DIR |= MAX7219_CS;
 
-  P1DIR &= ~(MAX7219_CLK);
   P1DIR |= MAX7219_CLK;
+
+  output(0x0b, 7);                   // set up to scan all eight digits
+  output(0x09, 0x00); 
 }
 
 void output(char address, char data)
 {
-  P1OUT &= ~(MAX7219_CS);
+  P1OUT |= MAX7219_CS;
   MAX7219_SendByte(address);
   MAX7219_SendByte(data);
-  P1OUT |= (MAX7219_CS);
+  P1OUT &= ~(MAX7219_CS);
+  P1OUT |= MAX7219_CS;
+  
 }
 
 void setTestMode(int on)
