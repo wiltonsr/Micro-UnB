@@ -9,7 +9,12 @@ int main(){
   DCOCTL = CALDCO_1MHZ;     // 1 Mhz DCO
   BCSCTL1 = CALBC1_1MHZ;
 
-  initialise();  
+  initialise(); 
+  setTestMode(0);
+  setShutdown(0);
+  setBrightness(1); // Brightness range 1..0x0f
+  showDigits(8);    // Make sure all digits are visible
+  output(0x09, 0); // using an led matrix (not digits) 
 
   configure_buttons();
 

@@ -6,8 +6,7 @@
 #define MAX7219_CS  BIT4
 #define MAX7219_CLK BIT5
 
-void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val){
-  uint8_t i;
+/*  uint8_t i;
 
   for (i = 0; i < 8; i++)  {
     if(!!(val & (1 << (7 - i))) == 0){
@@ -17,6 +16,20 @@ void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val){
     }
     P1OUT |= clockPin;
     P1OUT &= clockPin;
+  }
+}*/
+
+static void MAX7219_SendByte (unsigned char dataout)
+{
+  char i;
+  for (i=8; i>0; i--) {
+    unsigned char mask = 1 << (i - 1);                // calculate bitmask
+    P1OUT &= ~(MAX7219_CLK);                                        // bring CLK low
+    if (dataout & mask)                               // output one data bit
+      P1OUT |= MAX7219_DIN;                                     //  "1"
+    else                                              //  or
+      P1OUT &= ~(MAX7219_DIN);                                      //  "0"
+    P1OUT |= MAX7219_CLK;                                        // bring CLK high
   }
 }
 
@@ -34,6 +47,33 @@ void initialise(){
   P1DIR |= MAX7219_CLK;
 }
 
+void output(char address, char data)
+{
+  P1OUT &= ~(MAX7219_CS);
+  MAX7219_SendByte(address);
+  MAX7219_SendByte(data);
+  P1OUT |= (MAX7219_CS);
+}
+
+void setTestMode(int on)
+{
+  output(0x0f, on ? 0x01 : 0x00);
+}
+
+void setShutdown(int off)
+{
+  output(0x0c, off ? 0x00 : 0x01); //shutdown register - normal operation
+}
+
+void showDigits(char numDigits)
+{
+  output(0x0b, numDigits-1); //scan limit register
+}
+
+void setBrightness(char brightness)
+{
+  output(0x0a, brightness); //intensity register - max brightness
+}
 
 void put_byte(char data) {
   char i = 8;
