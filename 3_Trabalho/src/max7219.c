@@ -6,30 +6,18 @@
 #define MAX7219_CS  BIT4
 #define MAX7219_CLK BIT5
 
-/*  uint8_t i;
-
-  for (i = 0; i < 8; i++)  {
-    if(!!(val & (1 << (7 - i))) == 0){
-      P1OUT |= dataPin;
-    }else{
-      P1OUT &= ~(dataPin);
-    }
-    P1OUT |= clockPin;
-    P1OUT &= clockPin;
-  }
-}*/
 
 static void MAX7219_SendByte (unsigned char dataout)
 {
   char i;
   for (i=8; i>0; i--) {
-    unsigned char mask = 1 << (i - 1);                // calculate bitmask
-    P1OUT &= ~(MAX7219_CLK);                                        // bring CLK low
-    if (dataout & mask)                               // output one data bit
-      P1OUT |= MAX7219_DIN;                                     //  "1"
-    else                                              //  or
-      P1OUT &= ~(MAX7219_DIN);                                      //  "0"
-    P1OUT |= MAX7219_CLK;                                        // bring CLK high
+    unsigned char mask = 1 << (i - 1);              
+    P1OUT &= ~(MAX7219_CLK);                                        
+    if (dataout & mask)                               
+      P1OUT |= MAX7219_DIN;                                     
+    else                                             
+      P1OUT &= ~(MAX7219_DIN);                                    
+    P1OUT |= MAX7219_CLK;                                        
   }
 }
 
@@ -42,63 +30,57 @@ void initialise(){
 
   P1DIR |= MAX7219_CLK;
 
-  output(0x0b, 7);                   // set up to scan all eight digits
+  output(0x0b, 7);                   
   output(0x09, 0x00); 
 }
 
-void output(char address, char data)
-{
+void output(char address, char data){
   P1OUT |= MAX7219_CS;
   MAX7219_SendByte(address);
   MAX7219_SendByte(data);
   P1OUT &= ~(MAX7219_CS);
   P1OUT |= MAX7219_CS;
-  
 }
 
-void setTestMode(int on)
-{
+void setTestMode(int on){
   output(0x0f, on ? 0x01 : 0x00);
 }
 
-void setShutdown(int off)
-{
-  output(0x0c, off ? 0x00 : 0x01); //shutdown register - normal operation
+void setShutdown(int off){
+  output(0x0c, off ? 0x00 : 0x01);
 }
 
-void showDigits(char numDigits)
-{
-  output(0x0b, numDigits-1); //scan limit register
+void showDigits(char numDigits){
+  output(0x0b, numDigits-1);
 }
 
-void setBrightness(char brightness)
-{
-  output(0x0a, brightness); //intensity register - max brightness
+void setBrightness(char brightness){
+  output(0x0a, brightness);
 }
 
 void put_byte(char data) {
   char i = 8;
   char mask;
   while(i > 0) {
-    mask = 0x01 << (i - 1);           // get bitmask
+    mask = 0x01 << (i - 1);           
     P1OUT &= ~(MAX7219_CLK);
-    if (data & mask){                 // choose bit
+    if (data & mask){                
       P1OUT |= MAX7219_DIN;
     }else{
       P1OUT &= ~(MAX7219_DIN);
     }
     P1OUT |= MAX7219_CLK;
-    --i;                              // move to lesser bit
+    --i;                             
   }
 }
 
 void max_single(char reg, char col) {
   P1OUT &= ~(MAX7219_CS);
-  put_byte(reg);                        // specify register
+  put_byte(reg);                        
   //asm("mov.w reg, R15");
   //asm("call #putByte");
   //asm("pop R15");
-  put_byte(col);                        // put data
+  put_byte(col);                        
   P1OUT &= ~(MAX7219_CS);
   P1OUT |= (MAX7219_CS);
 }

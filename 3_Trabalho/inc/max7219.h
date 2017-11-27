@@ -11,7 +11,17 @@ void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val);
 
 void initialise();
 
+void setTestMode(int on);
+
+void setShutdown(int off);
+
+void setBrightness(char brightness);
+
+void showDigits(char numDigits);
+
 void put_byte(char data);
+
+void output(char address, char data);
 
 void max_single(char reg, char col);
 

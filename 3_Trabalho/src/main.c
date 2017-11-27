@@ -12,13 +12,12 @@ int main(){
   initialise(); 
   setTestMode(0);
   setShutdown(0);
-  setBrightness(1); // Brightness range 1..0x0f
-  showDigits(8);    // Make sure all digits are visible
-  //output(0x09, 0); // using an led matrix (not digits) 
-
+  setBrightness(0xff);
+  showDigits(8);   
+  
   configure_buttons();
 
-  __enable_interrupt(); // enable all interrupts
+  __enable_interrupt();
 
   clear_screen();
 
