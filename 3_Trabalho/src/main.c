@@ -9,7 +9,7 @@ int main(){
   DCOCTL = CALDCO_1MHZ;     // 1 Mhz DCO
   BCSCTL1 = CALBC1_1MHZ;
 
-  initialise();
+  initialise();  
 
   configure_buttons();
 
@@ -40,8 +40,10 @@ __interrupt void Port_1(void){
   }
   if(P1IFG & STOP_BTN){
     while((P1IN & STOP_BTN)==0){
+      delay(20);
       stop();
     }
     P1IFG &= ~STOP_BTN;
   }
+  return 0;
 }
