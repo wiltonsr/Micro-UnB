@@ -94,5 +94,5 @@ void write8x8(char a, char b, char c, char d, char e, char f, char g, char h){
   max_single(6,f);
   max_single(7,g);
   max_single(8,h);
-  delay(10000);
+  delay(5000);
 }
