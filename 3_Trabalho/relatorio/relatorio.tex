@@ -6,6 +6,8 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{textcomp}
@@ -362,10 +364,6 @@ Para trabalhos futuros, pode-se adicionar novos sinais à matriz de led e també
 
 \end{thebibliography}
 
-\newpage
-
-\section{Anexos}
-
-\lstinputlisting[language=C]{../src/main.c}
+\includepdf[pages={1-},pagecommand={},width=\textwidth]{anexos.pdf}
 
 \end{document}

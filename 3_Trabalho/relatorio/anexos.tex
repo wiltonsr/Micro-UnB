@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{listings}
+
+\def\blankpage{%
+      \clearpage%
+      \thispagestyle{empty}%
+      \addtocounter{page}{-1}%
+      \null%
+      \clearpage}
+
+\begin{document}
+
+\section{Anexos}
+
+\subsection{Main}
+\lstinputlisting[language=C]{../src/main.c}
+
+\subsection{MAX7219}
+\lstinputlisting[language=C]{../src/max7219.c}
+
+\subsection{Drawning}
+\lstinputlisting[language=C]{../src/drawing.c}
+
+\subsection{Utils}
+\lstinputlisting[language=C]{../src/utils.c}
+
+\blankpage
+
+\end{document}

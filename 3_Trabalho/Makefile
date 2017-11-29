@@ -57,6 +57,7 @@ folders:
 
 relatorio:
 	cd relatorio && pdflatex relatorio.tex
+	cd relatorio && pdflatex anexos.tex
 	-cd relatorio && bibtex relatorio.aux
 	cd relatorio && pdflatex relatorio.tex
 	cd relatorio && pdflatex relatorio.tex
