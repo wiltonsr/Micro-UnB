@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-void shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val);
+static void MAX7219_SendByte (unsigned char dataout);
 
 void initialise();
 
