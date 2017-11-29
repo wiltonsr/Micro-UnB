@@ -211,7 +211,7 @@ Uma chave push-botton tem um de seus pinos ligados no VCC, enquanto o outro pino
 
 \section{Descrição do Software}
 \subsection{Diagrama UML}
-A figura \ref{fig:uml} apresenta o diagrama UML do sistema. O sistema consiste de 4 arquivos, o arquivo main e 3 bibliotecas. O main realiza a chamada das funções das bibliotecas, realizando a execução do sistema em si. A biblioteca drawing contém os desenhos que são exibidos pela matriz 8x8. A biblioteca max7219 contém todas as funções relacionadas à manipulação do multiplexador max7219. A biblioteca utils contém funções de uso geral. 
+A figura \ref{fig:uml} apresenta o diagrama UML do sistema. O sistema consiste de 3 arquivos, o arquivo main e 2 bibliotecas. O main realiza a chamada das funções das bibliotecas, realizando a execução do sistema em si. A biblioteca Desenho contém os desenhos que são exibidos pela matriz 8x8. A biblioteca MAX7219 contém todas as funções relacionadas à manipulação do multiplexador MAX7219. 
 
 \begin{figure}[H]
   \centering
@@ -279,8 +279,8 @@ void write8x8(a, b, c, d, e, f, g, h){
 }
 \end{lstlisting}
 
-\subsubsection{Drawing.h}
-A biblioteca Drawing.h é a responsável pelo apoio na criação de funções para a exibição de imagens na matriz de led 8x8. Nesta biblioteca estão as funções rigth\_arrow(), left\_arrow(), ahead\_arrow() e stop(). O funcionamento básico de todas as funções desta biblioteca é o seguinte:
+\subsubsection{Desenho.h}
+A biblioteca Desenho.h é a responsável pelo apoio na criação de funções para a exibição de imagens na matriz de led 8x8. Nesta biblioteca estão as funções rigth\_arrow(), left\_arrow(), ahead\_arrow() e stop(). O funcionamento básico de todas as funções desta biblioteca é o seguinte:
 
 \begin{lstlisting}
 void left_arrow(){
@@ -360,7 +360,12 @@ Para trabalhos futuros, pode-se adicionar novos sinais à matriz de led e també
   \bibitem{b4} Mesriani Law Group, ``Safety Tips to Avoid Bicycle Accidents''. Disponível em: https://www.hg.org/article.asp?id=7752.
   \bibitem{b5} Marc Lindsay, ``10 Cycling Hand Signals You Need to Know''. Disponível em: http://blog.mapmyrun.com/10-cycling-hand-signals-need-know/.
 
-
 \end{thebibliography}
+
+\newpage
+
+\section{Anexos}
+
+\lstinputlisting[language=C]{../src/main.c}
 
 \end{document}
