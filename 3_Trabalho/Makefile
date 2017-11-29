@@ -55,3 +55,11 @@ folders:
 	@mkdir -p $(ELF_DIR) $(SRC_DIR) $(OBJ_DIR) $(INC_DIR)
 	@echo Structure Done Sucessfully.
 
+relatorio:
+	cd relatorio && pdflatex relatorio.tex
+	-cd relatorio && bibtex relatorio.aux
+	cd relatorio && pdflatex relatorio.tex
+	cd relatorio && pdflatex relatorio.tex
+	cd relatorio && rm -rf *.aux *.bbl *.blg *.dvi *.log
+	mv relatorio/relatorio.pdf ./relatorio_final.pdf
+
