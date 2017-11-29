@@ -127,13 +127,13 @@ Os materiais utilizados para a construção do Sistema de Sinalização para Cic
       \label{fig:switch}
     \end{figure}
 
-  % \item 2 chaves push-botton sem trava
-  %   \begin{figure}[H]
-  %     \centering
-  %     \includegraphics[width=0.5\linewidth]{push}
-  %     \caption{Chave push-botton. Fonte: http://www.huinfinito.com.br/}
-  %     \label{fig:push}
-  %   \end{figure}
+  \item 1 chaves push-botton sem trava
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\linewidth]{push}
+      \caption{Chave push-botton. Fonte: http://www.huinfinito.com.br/}
+      \label{fig:push}
+    \end{figure}
 
 \end{itemize}
 
@@ -163,11 +163,6 @@ A figura abaixo mostra o teste realizado com a matriz de led:
 \subsubsection{Verificação da Chave on-off-on}
 Para verificar se a chave on-off-on estava funcionando corretamente, foi ligada uma tensão de aproximadamente 3.3 volts nos pinos 1 e 3 do botão. O pino 2 funcionou como saída e foi ligado em um resistor de 1000 ohm, que estava ligado em série a um Led.
 
-% \textbf{Esquemático:}
-% A figura abaixo mostra o esquemático montado para o teste da chave on-off-on:
-%
-% COLOCAR FIGURA AQUUI
-%
 \textbf{Demonstração:}
 A figura abaixo mostra o teste realizado com a chave on-off-on:
 \begin{figure}[H]
@@ -177,27 +172,27 @@ A figura abaixo mostra o teste realizado com a chave on-off-on:
   \label{fig:dem_on_off}
 \end{figure}
 
-% \subsubsection{Verificação da Chave Push-Botton}
-% Para verificar se a chave push-botton estava funcionando corretamente, foi ligada uma tensão de aproximadamente 3.3 volts em um resistor de 1000 ohm, que estava ligado em série ao botão. O botão, por sua vez, estava ligado em série a um led. Dessa forma, era esperado que ao pressionar o botão, o led acendesse, e ao soltar o botão, o led apagasse.
-%
-% \textbf{Esquemático:}
-% A figura abaixo mostra o esquemático montado para o teste da chave push-button:
-%
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.5\linewidth]{esq1}
-%   \caption{Teste realizado com o Push Button. Fonte: Autores}
-%   \label{fig:dem_push}
-% \end{figure}
-%
-% \textbf{Demonstração:}
-% A figura abaixo mostra o teste realizado com a chave push-botton:
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.5\linewidth]{push-bottom}
-%   \caption{Teste realizado com a chave push-botton. Fonte: Autores}
-%   \label{fig:dem_push_botton}
-% \end{figure}
+\subsubsection{Verificação da Chave Push-Botton}
+Para verificar se a chave push-botton estava funcionando corretamente, foi ligada uma tensão de aproximadamente 3.3 volts em um resistor de 1000 ohm, que estava ligado em série ao botão. O botão, por sua vez, estava ligado em série a um led. Dessa forma, era esperado que ao pressionar o botão, o led acendesse, e ao soltar o botão, o led apagasse.
+
+\textbf{Esquemático:}
+A figura abaixo mostra o esquemático montado para o teste da chave push-button:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth]{esq1}
+  \caption{Teste realizado com o Push Button. Fonte: Autores}
+  \label{fig:dem_push}
+\end{figure}
+
+\textbf{Demonstração:}
+A figura abaixo mostra o teste realizado com a chave push-botton:
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth]{push-bottom}
+  \caption{Teste realizado com a chave push-botton. Fonte: Autores}
+  \label{fig:dem_push_botton}
+\end{figure}
 
 \subsection{Montagem}
 Para auxiliar no procedimento de montagem, foi feito um esquemático utilizando a ferramenta Fritzing \footnote{http://fritzing.org/home/}. A figura \ref{fig:fritzing} apresenta o diagrama simplificado com os componentes de hardware que são utilizados no sistema. 
@@ -274,22 +269,42 @@ void max_single(registrador, coluna){
 
 \begin{lstlisting}
 void write8x8(a, b, c, d, e, f, g, h){
-  Execute mas_single(a);
-  Execute mas_single(b);
-  Execute mas_single(c);
-  Execute mas_single(d);
-  Execute mas_single(e);
-  Execute mas_single(f);
-  Execute mas_single(g);
+  Execute max_single(a);
+  Execute max_single(b);
+  Execute max_single(c);
+  Execute max_single(d);
+  Execute max_single(e);
+  Execute max_single(f);
+  Execute max_single(g);
 }
 \end{lstlisting}
 
 \subsubsection{Desenho.h}
-A biblioteca Desenho.h é a responsável pelo apoio na criação de funções para a exibição de imagens na matriz de led 8x8. Nesta biblioteca estão as funções setaDireita(), setaEsquerda(), movimentoContinuo() e parada(). O funcionamento básico de todas as funções desta biblioteca é o seguinte:
+A biblioteca Desenho.h é a responsável pelo apoio na criação de funções para a exibição de imagens na matriz de led 8x8. Nesta biblioteca estão as funções rigth\_arrow(), left\_arrow(), ahead\_arrow() e stop(). O funcionamento básico de todas as funções desta biblioteca é o seguinte:
 
 \begin{lstlisting}
-void setaEsquerda(){
+void left_arrow(){
   Executa write8x8(8 valores hexadecimais);
+}
+\end{lstlisting}
+
+\subsubsection{Utils.h}
+A biblioteca Utils.h é onde armazenamos as funções de uso geral do sistema. Lá
+se encontram as funções delay(), clear\_screen() e configure\_buttons();
+\begin{lstlisting}
+void configure_buttons(){
+  Configura todos os botoes para entrada;
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+void delay(dado){
+  Itere ate de dado ate zero;
+}
+
+\begin{lstlisting}
+void clear_screen(dado){
+  Executa write8x8(0x00 em todos os leds);
 }
 \end{lstlisting}
 
@@ -298,21 +313,21 @@ As figuras a seguir ilustram o funcionamento de cada uma das funções baseado n
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\linewidth]{esq}
-  \caption{Função setaEsquerda() em funcionamento. Fonte: Autores}
+  \caption{Função left\_arrow() em funcionamento. Fonte: Autores}
   \label{fig:esq}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\linewidth]{dir}
-  \caption{Função setaDireita() em funcionamento. Fonte: Autores}
+  \caption{Função right\_arrow() em funcionamento. Fonte: Autores}
   \label{fig:dir}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\linewidth]{parada}
-  \caption{Função parada() em funcionamento. Fonte: Autores}
+  \caption{Função stop() em funcionamento. Fonte: Autores}
   \label{fig:parada}
 \end{figure}
 
