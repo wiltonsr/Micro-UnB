@@ -33,13 +33,15 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \maketitle
 
 \begin{abstract}
-  This document is a model and instructions for \LaTeX.
-  This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes,
-  or Math in Paper Title or Abstract.
+A fim de diminuir a quantidade de acidentes envolvendo ciclistas nas vias brasileiras
+foi proposto o objetivo de desenvolver um sistema de sinalização luminoso para
+permitir aos ciclistas indicarem suas intenções para os demais participantes do
+trânsito através de uma matriz luminosa. Utilizando o microcontrolador MSP430 da
+Texas Instruments foi possível atingir o objetivo proposto.
 \end{abstract}
 
 \begin{IEEEkeywords}
-  component, formatting, style, styling, insert
+  msp430, matriz de led, max7219, microcontrolador, ciclista, sinalização
 \end{IEEEkeywords}
 
 \section{Introdução}
@@ -124,13 +126,13 @@ Os materiais utilizados para a construção do Sistema de Sinalização para Cic
       \label{fig:switch}
     \end{figure}
 
-  \item 2 chaves push-botton sem trava
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.5\linewidth]{push}
-      \caption{Chave push-botton. Fonte: http://www.huinfinito.com.br/}
-      \label{fig:push}
-    \end{figure}
+  % \item 2 chaves push-botton sem trava
+  %   \begin{figure}[H]
+  %     \centering
+  %     \includegraphics[width=0.5\linewidth]{push}
+  %     \caption{Chave push-botton. Fonte: http://www.huinfinito.com.br/}
+  %     \label{fig:push}
+  %   \end{figure}
 
 \end{itemize}
 
@@ -174,27 +176,27 @@ A figura abaixo mostra o teste realizado com a chave on-off-on:
   \label{fig:dem_on_off}
 \end{figure}
 
-\subsubsection{Verificação da Chave Push-Botton}
-Para verificar se a chave push-botton estava funcionando corretamente, foi ligada uma tensão de aproximadamente 3.3 volts em um resistor de 1000 ohm, que estava ligado em série ao botão. O botão, por sua vez, estava ligado em série a um led. Dessa forma, era esperado que ao pressionar o botão, o led acendesse, e ao soltar o botão, o led apagasse.
-
-\textbf{Esquemático:}
-A figura abaixo mostra o esquemático montado para o teste da chave push-button:
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\linewidth]{esq1}
-  \caption{Teste realizado com o Push Button. Fonte: Autores}
-  \label{fig:dem_push}
-\end{figure}
-
-\textbf{Demonstração:}
-A figura abaixo mostra o teste realizado com a chave push-botton:
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\linewidth]{push-bottom}
-  \caption{Teste realizado com a chave push-botton. Fonte: Autores}
-  \label{fig:dem_push_botton}
-\end{figure}
+% \subsubsection{Verificação da Chave Push-Botton}
+% Para verificar se a chave push-botton estava funcionando corretamente, foi ligada uma tensão de aproximadamente 3.3 volts em um resistor de 1000 ohm, que estava ligado em série ao botão. O botão, por sua vez, estava ligado em série a um led. Dessa forma, era esperado que ao pressionar o botão, o led acendesse, e ao soltar o botão, o led apagasse.
+%
+% \textbf{Esquemático:}
+% A figura abaixo mostra o esquemático montado para o teste da chave push-button:
+%
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{esq1}
+%   \caption{Teste realizado com o Push Button. Fonte: Autores}
+%   \label{fig:dem_push}
+% \end{figure}
+%
+% \textbf{Demonstração:}
+% A figura abaixo mostra o teste realizado com a chave push-botton:
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{push-bottom}
+%   \caption{Teste realizado com a chave push-botton. Fonte: Autores}
+%   \label{fig:dem_push_botton}
+% \end{figure}
 
 \subsection{Montagem}
 Para auxiliar no procedimento de montagem, foi feito um esquemático utilizando a ferramenta Fritzing \footnote{http://fritzing.org/home/}. A figura \ref{fig:fritzing} apresenta o diagrama simplificado com os componentes de hardware que são utilizados no sistema. 
