@@ -16,7 +16,7 @@ OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.c=.o}}}
 COMPILER_ARG		= $(MAIN_FILE)
 FLASH_ARG 			= $(MAIN_FILE:.c=.elf)
 
-.PHONY: clean folders compiler flash flasherase
+.PHONY: clean folders compiler flash flasherase relatorio
 
 all: folders
 	$(MAKE) $(MAIN_FILE)
