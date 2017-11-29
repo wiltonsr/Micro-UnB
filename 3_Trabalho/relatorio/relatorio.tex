@@ -127,7 +127,7 @@ Os materiais utilizados para a construção do Sistema de Sinalização para Cic
       \label{fig:switch}
     \end{figure}
 
-  \item 1 chaves push-botton sem trava
+  \item 2 chaves push-botton sem trava
     \begin{figure}[H]
       \centering
       \includegraphics[width=0.5\linewidth]{push}
@@ -207,7 +207,8 @@ A matriz de led, que possui o multiplexador MAX7219, tem seu primeiro pino, VCC,
 
 A chave on-off-on tem o pino central ligado no VCC. O pino da direita é ligado no BIT0 do MSP e o pino da esquerda é ligado no BIT6 do MSP. 
 
-A chave push-botton tem um de seus pinos ligados no VCC, enquanto o outro pino fica ligado no BIT7 do MSP. 
+Uma chave push-botton tem um de seus pinos ligados no VCC, enquanto o outro pino fica ligado no BIT7 do MSP. 
+Enquanto a outra tem um de seus pinos ligados no GND e o outro no pino RST.
 
 \section{Descrição do Software}
 \subsection{Diagrama UML}
