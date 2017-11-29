@@ -1,12 +1,6 @@
-\documentclass{article}
+\documentclass[12pt,a4paper]{article}
+\pagenumbering{gobble}
 \usepackage{listings}
-
-\def\blankpage{%
-      \clearpage%
-      \thispagestyle{empty}%
-      \addtocounter{page}{-1}%
-      \null%
-      \clearpage}
 
 \begin{document}
 
@@ -23,7 +17,5 @@
 
 \subsection{Utils}
 \lstinputlisting[language=C]{../src/utils.c}
-
-\blankpage
 
 \end{document}
